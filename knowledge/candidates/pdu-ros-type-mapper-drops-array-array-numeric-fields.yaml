@@ -1,5 +1,5 @@
 id: pdu-ros-type-mapper-drops-array-array-numeric-fields
-title: hakoniwa-pdu-ros silently drops every numeric array because rclpy stores sequence<double> as array.array, and its own tests cannot catch it
+title: hakoniwa-pdu-ros silently drops rclpy array.array sequence fields, and its own tests cannot catch it because they use fake message classes
 status: candidate
 
 knowledge_type:
@@ -44,9 +44,13 @@ observation:
     - "Blast radius, measured field by field. array.array representations that were dropped
       before the patch and correct after it: JointState.position ([] -> [0.1, 0.2]),
       LaserScan.ranges ([] -> [1.0, 2.0, 3.0]), Float64MultiArray.data
-      ([] -> [1.5, 2.5, 3.5]). JointState.name (a list) was correct both times. So nearly
-      every type on the README's Verified list loses its numeric payload in a real ROS
-      process."
+      ([] -> [1.5, 2.5, 3.5]). JointState.name (a list) was correct both times. Stated
+      precisely, because the distinction matters: three fields across three of the five
+      README Verified types were measured. PointCloud2 and CameraInfo were NOT measured. The
+      mechanism is field-representation-dependent rather than type-dependent, so any field
+      rclpy backs with array.array is expected to behave the same way, but that expectation
+      is reasoning, not measurement, and the remaining types should be tested before the
+      breadth is asserted."
     - "Why upstream CI is blind to it. test/test_type_mapper.py calls
       _install_fake_ros_modules() and asserts against fake message classes whose sequence
       fields are plain lists. The array.array path never runs, so the suite can pass while
@@ -121,9 +125,10 @@ promotion_targets:
           before this patch and would keep failing if the branch regresses.
 
 promotion_rationale:
-  - The defect silently destroys the numeric content of the very message types the README
-    advertises as verified, so the correction belongs in the owning repository rather than
-    in a Recipe or a catalog note.
+  - The defect silently destroys the numeric content of every field it was measured on, and
+    those fields belong to three of the five message types the README advertises as
+    verified, so the correction belongs in the owning repository rather than in a Recipe or
+    a catalog note.
   - The guardrail is proposed against the test suite because the one-line source fix is
     trivial while the reason it went unnoticed is structural.
 

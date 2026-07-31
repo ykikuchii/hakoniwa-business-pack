@@ -40,6 +40,12 @@ observation:
     - "The relay is not a solution, it is the evidence. It exists only to change one QoS
       setting that the binding config cannot express. Every consumer bridging a BEST_EFFORT
       sensor topic would have to ship the same node."
+    - "The absence is package-wide, not merely sample-level. Grepping the whole installed
+      hakoniwa_pdu_ros package (clone of upstream revision 8693f4d) case-insensitively for
+      'qos' returns zero matches, so there is no QoS field in the binding model, no QoS
+      parsing anywhere, and no undocumented option a caller could set. The subscription
+      creation at bridge_node.py:85 is the only place QoS is decided, and it decides it by
+      omission."
     - "Diagnostic cost. Because the failure is silent, this presents identically to 'the
       bridge is misconfigured', 'the topic name is wrong' and 'the publisher is not running'.
       A QoS-mismatch warning, or simply logging the resolved subscription QoS at startup,

@@ -63,8 +63,12 @@ sources:
   runtime_evidence:
     - description: >-
         External contributor's native Windows 11 x86_64 environment, CPython 3.12.7,
-        2026-07-30/31. PyPI Python layer plus locally built extension - import OK, open OK,
-        start OK, post_start OK, first recv_next raised the cdecl TypeError quoted above.
+        2026-07-30/31. PyPI Python layer plus locally built extension - the captured run log
+        shows, in order, the two DLL-directory lines, 'opening ...endpoint_tcp.json', the
+        endpoint's own 'PDU Definition: loaded successfully' and 'DEBUG: Endpoint post_start
+        called', the harness line reporting the TCP server started, and only then a
+        traceback whose last frame is c_endpoint.py recv_next raising the cdecl TypeError
+        quoted above. So the failure is at the first receive, not at import or startup.
         Repository Python layer plus the same extension - recv_next worked and one run
         received 1222 JointState PDUs. The DLL search gap reproduced in the same
         configuration and required two explicit os.add_dll_directory calls.
