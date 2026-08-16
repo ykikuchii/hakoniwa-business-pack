@@ -1,0 +1,84 @@
+id: manufacturing-intralogistics-preplanning
+title: 工場内搬送のデジタルツイン事前検討
+usecase_version: 0.1
+
+audience:
+  primary:
+    - manufacturing-engineering-team
+    - robot-system-integrator
+    - robot-control-developer
+  notes:
+    - This Usecase is simulation-only and addresses early layout, mobile-platform, and integration review before a physical-system decision.
+
+situation: >
+  A manufacturing engineering team is considering a new or changed in-factory material-
+  handling path and wants to review representative vehicle movement, sensing, command,
+  and state-observation paths before preparing a physical test area.
+
+problem: >
+  Facility geometry, vehicle models, route assumptions, sensor configuration, controller
+  commands, and state-output contracts must be aligned to make a scenario review
+  meaningful. Discovering mismatches only after equipment or a test area is prepared
+  makes the integration work harder to isolate and assess.
+
+desired_outcome: >
+  Use a representative mobile-platform model in a Hakoniwa and MuJoCo simulation to
+  review scenario-specific layout and route assumptions, exchange control and state data
+  through PDU contracts, and record the model, integration, and validation gaps that
+  must be addressed before planning a physical-system test.
+
+status:
+  feasibility: partially_feasible
+  validation: not_tested
+  confidence: medium
+  rationale:
+    - The public Hakoniwa MuJoCo Robots catalog records mobile-base PDU runtime patterns and forklift unit/context samples.
+    - Hakoniwa Core Pro, PDU Endpoint, and PDU Registry provide documented synchronization and PDU-contract roles for a simulation composition.
+    - No public Business Pack Recipe currently captures a complete in-factory layout, route, traffic, vehicle-model, and acceptance-validation path.
+
+realized_by: []
+
+supported_by:
+  - component_id: hakoniwa-mujoco-robots
+    role: Provide MuJoCo-based mobile-platform simulation assets, sensor examples, and PDU-integrated controller and state paths.
+  - component_id: hakoniwa-core-pro
+    role: Provide Hakoniwa asset lifecycle and shared simulation synchronization for the composed simulation.
+  - component_id: hakoniwa-pdu-endpoint
+    role: Provide configuration-driven PDU communication infrastructure for control and state exchange.
+  - component_id: hakoniwa-pdu-registry
+    role: Provide authoritative PDU definitions and generated binary-contract artifacts for compatible participants.
+
+communication_notes:
+  safe_statements:
+    - The Catalog records mobile-platform PDU runtime patterns and forklift samples that can inform a simulation-first in-factory transport investigation.
+    - A facility-specific layout and mobile-platform scenario requires its own model, controller, and validation work.
+    - This Usecase preserves the gap between a simulation review and an approved physical-system or production deployment.
+  avoid_statements:
+    - The current Business Pack provides a verified factory-wide material-handling digital twin.
+    - A simulated route or vehicle behavior proves throughput, safety, collision avoidance, or production readiness.
+    - Any forklift, AGV, AMR, factory layout, WMS, MES, or traffic-management system can be connected without scenario-specific integration and validation.
+
+limitations:
+  - No public Business Pack Recipe currently reproduces a complete in-factory material-handling scenario from this repository alone.
+  - The cataloged forklift context and RD-light handoff examples are advanced and experimental; they do not establish a factory-wide runtime pattern.
+  - Facility geometry, routes, traffic rules, payload assumptions, sensor behavior, controller logic, and acceptance criteria require domain-expert review.
+  - The Catalog does not establish a validated WMS, MES, production-scheduling, or physical-equipment integration path for this Usecase.
+  - Simulation output must not be connected to physical vehicles, industrial equipment, or production systems without explicit approval and an appropriate safety gate.
+
+next_steps:
+  - Add a public, metadata-only Recipe that defines a reproducible mobile-platform scenario boundary and its required input artifacts.
+  - Define scenario-specific PDU contracts and representative state and event observations before claiming an integration path.
+  - Validate a selected facility layout, vehicle model, route set, and controller against agreed acceptance criteria before any physical-system test.
+  - Record any recurring missing interfaces or runtime pitfalls as Knowledge Candidates and promote only validated findings.
+
+tags:
+  - manufacturing
+  - digital-twin
+  - intralogistics
+  - material-handling
+  - mobile-platform
+  - forklift
+  - mujoco
+  - pdu
+  - preplanning
+  - simulation-only

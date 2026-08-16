@@ -15,3 +15,8 @@ usecases:
     title: 産業用ロボットアーム導入前の指令・状態統合検証
     feasibility: feasible
     validation: partially_verified
+  - id: manufacturing-intralogistics-preplanning
+    path: examples/manufacturing-intralogistics-preplanning.yaml
+    title: 工場内搬送のデジタルツイン事前検討
+    feasibility: partially_feasible
+    validation: not_tested
