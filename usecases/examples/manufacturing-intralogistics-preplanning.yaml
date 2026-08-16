@@ -11,8 +11,9 @@ audience:
     - This Usecase is simulation-only and addresses early layout, mobile-platform, and integration review before a physical-system decision.
 
 situation: >
-  A manufacturing engineering team is considering a new or changed in-factory material-
-  handling path and wants to review representative vehicle movement, sensing, command,
+  A manufacturing engineering team is considering a new or changed in-factory
+  material-handling path and wants to review representative vehicle movement, sensing,
+  command,
   and state-observation paths before preparing a physical test area.
 
 problem: >
